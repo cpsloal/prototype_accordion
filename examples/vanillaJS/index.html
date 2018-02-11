@@ -1,0 +1,384 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Accordion Example - VanillaJS</title>
+</head>
+<body>
+    <h1>Accordion Example using VanillaJS</h1>
+    <p class="documentation">What do you do when the content in your accordion changes in size after the open/close animation has taken place?</p>
+    <p class="documentation">Well, lets use the <strong class="important">MutationObserver() API</strong> to change size of content container that is visible.</p>
+
+    
+
+    <section class="accordion-content-control">
+        <h2 class="documentation">Control:</h2>
+        <select id="s1">
+            <option value="---" disabled>Example 1 ------------</option>
+            <option value="e1s1">Example 1 - Section 1</option>
+            <option value="e1s2">Example 1 - Section 2</option>
+            <option value="e1s3">Example 1 - Section 3</option>
+            <option value="e1s4">Example 1 - Section 4</option>
+            <option value="---" disabled>Example 2 ------------</option>
+            <option value="e2s1">Example 2 - Section 1</option>
+            <option value="e2s2">Example 2 - Section 2</option>
+            <option value="e2s3">Example 2 - Section 3</option>
+            <option value="e2s4">Example 2 - Section 4</option>
+        </select><br>
+        <textarea id="s1content" cols="50" rows="3" placeholder="Enter Text to add to the accordion sections"></textarea><br>
+        <button id="s1add">Add Text</button>
+        <button id="toggleBoxVisibility">Toggle Content Box Visibility</button>
+        <br><br>
+    </section>
+    
+    <section id="example1" class="example">
+        <h2 class="documentation">Example 1</h2>
+        <p class="documentation">In this example, the max-height for each of the accordion container is fixed, and because its fixed, notice that there is a lag before the 'collapse' animation seems to take time.  Toggling the visibility of the accordion container is not smooth.</p>
+        <ul id="accordion1" class="accordion">
+            <li class="article">
+                <header>Section 1</header>
+                <section id="e1s1">
+                    <p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><div class="box hidden"></div>
+                </section>
+            </li>
+            <li class="article">
+                <header>Section 2</header>
+                <section id="e1s2">
+                        <div class="box hidden"></div><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p>
+                </section>
+            </li>
+            <li class="article">
+                <header>Section 3</header>
+                <section id="e1s3">
+                        <div class="box hidden"></div><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p>
+                </section>
+            </li>
+            <li class="article">
+                <header>Section 4</header>
+                <section id="e1s4">
+                    <p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><div class="box hidden"></div>
+                </section>
+            </li>
+        </ul>
+    </section>
+
+
+    <section id="example2" class="example">
+        <h2 class="documentation">Example 2</h2>
+        <p class="documentation">In this example, the max-height for each of the accordion container is <strong>dynamically set using VanillaJS</strong>; notice that there is <strong>no</strong> lag before the 'collapse' animation seems to trigger.  Toggling the visibility of the accordion container <strong>is</strong> smooth.</p>
+        <ul id="accordion2" class="accordion">
+            <li class="article">
+                <header>Section 1</header>
+                <section id="e2s1">
+                    <div class="box hidden"></div><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p><p>content 1</p>
+                </section>
+            </li>
+            <li class="article">
+                <header>Section 2</header>
+                <section  id="e2s2">
+                    <p>content 2</p><p>content 2</p><p>content 2</p><div class="box hidden"></div><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p><p>content 2</p>
+                </section>
+            </li>
+            <li class="article">
+                <header>Section 3</header>
+                <section  id="e2s3">
+                    <p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><div class="box hidden"></div><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p><p>content 3</p>
+                </section>
+            </li>
+            <li class="article">
+                <header>Section 4</header>
+                <section id="e2s4">
+                    <p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><p>content 4</p><div class="box hidden"></div>
+                </section>
+            </li>
+        </ul>
+    </section>
+
+
+    <style>
+        /* ******************* */
+        /* Styles for the page */
+        /* ******************* */
+
+        body {
+            padding: 50px;
+            background-color: steelblue;
+        }
+
+        h1 {
+            margin-bottom: 50px;
+            color: gainsboro;
+        }
+
+        .example {
+            width: 350px;
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 40px;
+        }
+
+        .documentation {
+            color: gainsboro;
+        }
+
+        .important {
+            color: red;
+        }
+
+        .accordion-content-control {
+            margin-top: 50px;
+        }
+    </style>
+
+    <style>
+        /* *********************************** */
+        /* Shared Styles for Accordion example */
+        /* *********************************** */
+        .box {
+            background-color: seagreen;
+            min-height: 100px;
+            min-width: calc(100% - 40px);
+            display: block;
+            margin: 20px;
+        } 
+
+        .hidden {
+            display: none;
+        }
+
+        .article p {
+            padding-left: 15px;
+        }
+
+        .article header::before {
+            content: '+\2003';
+            margin-left: 5px;
+        }
+
+        .article.is-active header::before {
+            content: '\2212\2003';
+            margin-left: 5px;
+        }
+    </style>
+
+    <style>
+        /* ********************************** */
+        /* Styles for the accordion example 1 */
+        /* ********************************** */
+        
+        /* reset the default UL styles */
+        #example1 ul.accordion {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* set the default accordion header style */
+        #example1 ul.accordion li.article > header {
+            border-bottom: grey solid 1px;
+            background-color: whitesmoke;
+            padding: 5px;
+        }
+        
+        /* set the default accordion body style: hidden */
+        #example1 ul.accordion li.article > section {
+            background-color: white;
+            
+            /* following is used to hide the accordion content */
+            transition: visibility 0.45s, max-height 0.45s;
+            max-height: 0px;
+            visibility: hidden;
+            overflow: hidden;
+        }
+
+        #example1 ul.accordion li.article.is-active > section {
+            /* following is used to show the accordion content */
+            transition: max-height 1s;
+            max-height: 9900px;
+            visibility: visible;
+        }
+
+    </style>
+
+    <script>
+        // 
+        // interactions for the accordion (example 1)
+        // 
+
+        function toggleIsActive (target) {
+            const _accordionArticle = target.parentElement
+            _accordionArticle.classList.toggle('is-active')
+        }
+
+        // note that the following line will only get the first element in the doc that matches the css selector
+        const _accordionElement = document.querySelector('#example1 ul.accordion')
+        
+        // attach event listeners for click on the accordion headers
+        _accordionElement.addEventListener('click', function (e) {
+
+            // if the element clicked is not a header in the accordion, then exit the event handler
+            if(!e.target.matches('#example1 ul.accordion li.article > header')) return
+
+            // prevent default click behaviors
+            e.preventDefault();
+            e.stopPropagation();
+
+            const _clickTarget = e.target;
+            toggleIsActive(_clickTarget)
+        })
+
+    </script>
+
+    <style>
+        /* ********************************** */
+        /* Styles for the accordion example 2 */
+        /* ********************************** */
+        
+        /* reset the default UL styles */
+        #example2 ul.accordion {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* set the default accordion header style */
+        #example2 ul.accordion li.article > header {
+            border-bottom: grey solid 1px;
+            background-color: whitesmoke;
+            padding: 5px;
+        }
+        
+        /* set the default accordion body style: hidden */
+        #example2 ul.accordion li.article > section {
+            background-color: white;
+            
+            /* following is used to hide the accordion content */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        /* #example2 ul.accordion li.article.is-active > section {
+
+        } */
+
+    </style>
+
+    <script>
+        // 
+        // interactions for the accordion (example 1)
+        // 
+
+        function example2ToggleIsActive (target) {
+            const _accordionArticle = target.parentElement
+            const _accordionArticleContent = target.nextElementSibling
+
+            if (_accordionArticleContent.style.maxHeight) {
+                _accordionArticleContent.style.maxHeight = null;
+            } else {
+                _accordionArticleContent.style.maxHeight = _accordionArticleContent.scrollHeight + 'px';
+            }
+
+            _accordionArticle.classList.toggle('is-active')
+        }
+
+        // note that the following line will only get the first element in the doc that matches the css selector
+        const _accordionExample2Element = document.querySelector('#example2 ul.accordion')
+        
+        // attach event listeners for click on the accordion headers
+        _accordionExample2Element.addEventListener('click', function (e) {
+
+            // if the element clicked is not a header in the accordion, then exit the event handler
+            if(!e.target.matches('#example2 ul.accordion li.article > header')) return
+
+            // prevent default click behaviors
+            e.preventDefault();
+            e.stopPropagation();
+
+            const _clickTarget = e.target;
+            example2ToggleIsActive(_clickTarget)
+        })
+
+    </script>
+
+    <script>
+        // code for adding contents
+        const _addButton = document.getElementById('s1add')
+        const _toggleBoxButton = document.getElementById('toggleBoxVisibility')
+        
+        _addButton.addEventListener('click', function (e) {
+            // if the element clicked is not a button, then exit the event handler
+            if(!e.target.matches('button')) return
+            
+            // prevent default click behaviors
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const _content = document.getElementById('s1content').value
+            const _selectionOptions = document.getElementById('s1')
+            const _selectedValue = _selectionOptions.options[_selectionOptions.selectedIndex].value
+
+            const _addHere = document.getElementById(_selectedValue)
+
+            if(_addHere) {
+                let tmp = document.createElement("p")
+                tmp.appendChild(document.createTextNode(_content))
+                _addHere.appendChild(tmp)
+            }
+        })
+
+        _toggleBoxButton.addEventListener('click', function (e) {
+            // if the element clicked is not a button, then exit the event handler
+            if(!e.target.matches('button')) return
+            
+            // prevent default click behaviors
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const _content = document.getElementById('s1content').value
+            const _selectionOptions = document.getElementById('s1')
+            const _selectedValue = _selectionOptions.options[_selectionOptions.selectedIndex].value
+
+            const _boxToToggleVisility = document.querySelector('#' + _selectedValue + ' ' + 'div.box')
+
+            if(_boxToToggleVisility) {
+                _boxToToggleVisility.classList.toggle('hidden')
+            }
+
+        })
+
+
+        // Observer mutations in the accordion
+
+        const targetNode = document.getElementById('example2')
+
+        // Options for the observer (which mutations to observe)
+        const config = { attributes: true, childList: true, characterData: true, subtree: true }
+
+        // Callback function to execute when mutations are observed
+        const callback = function(mutationsList) {
+            const _activeElements = document.querySelectorAll('#example2 .is-active')
+
+            _activeElements.forEach(element => {
+                const _container = element.querySelector("header ~ section")
+                const _containerScrollHeight = _container.scrollHeight + 'px'
+                const _containerStyleMaxHeight = _container.style.maxHeight
+
+                if(_containerScrollHeight != _containerStyleMaxHeight) {
+                    _container.style.maxHeight = _containerScrollHeight
+                }
+            })
+        }
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(callback);
+
+        // Start observing the target node for configured mutations
+        observer.observe(targetNode, config);
+
+    </script>
+
+
+</body>
+</html>
